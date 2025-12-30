@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Will Your 2026 Look Like?</title>
+  <meta property="og:title" content="What Will Your 2026 Look Like?">
+  <meta property="og:description" content="Take this fun quiz to discover your personal 2026 vibe based on your 2025 energy!">
+  <meta property="og:image" content="https://thumbs.dreamstime.com/b/festive-night-fireworks-text-decorative-happy-new-year-greeting-celebration-372874783.jpg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    
+    * { box-sizing: border-box; }
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: #fff; 
+      min-height: 100vh; 
+      margin: 0; 
+      padding: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .quiz-container { 
+      max-width: 800px; 
+      width: 92%; 
+      margin: 20px auto; 
+      background: rgba(255, 255, 255, 0.15); 
+      backdrop-filter: blur(14px); 
+      border-radius: 28px; 
+      padding: 40px 30px; 
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4); 
+      text-align: center;
+    }
+    h1 { 
+      font-size: 2.8em; 
+      margin-bottom: 8px; 
+      text-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+    }
+    h1 small { 
+      font-size: 0.55em; 
+      display: block; 
+      opacity: 0.9; 
+      font-weight: 400;
+    }
+    .intro-text { 
+      font-size: 1.2em; 
+      margin: 20px 0 30px; 
+      opacity: 0.95; 
+    }
+    .progress { 
+      height: 10px; 
+      background: rgba(255,255,255,0.25); 
+      border-radius: 5px; 
+      margin: 30px 0; 
+      overflow: hidden;
+    }
+    .progress-bar { 
+      height: 100%; 
+      background: linear-gradient(90deg, #ffd700, #ffea80); 
+      border-radius: 5px; 
+      width: 0%; 
+      transition: width 0.6s ease;
+    }
+    .question { 
+      margin-bottom: 40px; 
+      display: none; 
+      animation: fadeIn 0.8s ease forwards; 
+    }
+    .question.active { display: block; }
+    h3 { 
+      font-size: 1.6em; 
+      margin-bottom: 25px; 
+      line-height: 1.4;
+    }
+    label { 
+      display: block; 
+      padding: 18px 20px; 
+      margin: 12px 0; 
+      background: rgba(255,255,255,0.25); 
+      border-radius: 16px; 
+      cursor: pointer; 
+      transition: all 0.4s ease; 
+      font-size: 1.1em;
+      text-align: left;
+    }
+    label:hover { 
+      background: rgba(255,255,255,0.45); 
+      transform: translateY(-4px) scale(1.02); 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    input[type="radio"] { 
+      margin-right: 14px; 
+      transform: scale(1.5); 
+      accent-color: #ffd700; 
+    }
+    .buttons { 
+      margin-top: 40px; 
+    }
+    button { 
+      background: linear-gradient(45deg, #ffd700, #ffea80); 
+      color: #333; 
+      border: none; 
+      padding: 16px 40px; 
+      border-radius: 50px; 
+      font-size: 1.3em; 
+      font-weight: 600; 
+      cursor: pointer; 
+      margin: 10px; 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: all 0.4s;
+    }
+    button:hover { 
+      transform: translateY(-3px) scale(1.08); 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    #result { 
+      display: none; 
+      animation: fadeIn 1s ease; 
+    }
+    #result h2 { 
+      font-size: 3.2em; 
+      margin: 25px 0; 
+      text-shadow: 0 6px 20px rgba(0,0,0,0.5); 
+    }
+    #result p { 
+      font-size: 1.4em; 
+      max-width: 90%; 
+      margin: 25px auto; 
+      line-height: 1.7; 
+    }
+    #result-img { 
+      max-width: 100%; 
+      border-radius: 20px; 
+      margin: 35px 0; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+    }
+    .share-card { 
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); 
+      padding: 35px; 
+      border-radius: 24px; 
+      margin: 40px auto; 
+      max-width: 650px; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      color: #333;
+    }
+    .share-card h3 { 
+      font-size: 2.6em; 
+      margin: 0 0 15px 0; 
+    }
+    .share-card p { 
+      font-size: 1.3em; 
+      margin: 15px 0; 
+      line-height: 1.5;
+    }
+    .share-card small { 
+      font-size: 1em; 
+      opacity: 0.8; 
+    }
+    .share-buttons { 
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+      gap: 15px; 
+      margin: 50px 0 20px; 
+    }
+    .share-btn { 
+      padding: 14px 30px; 
+      color: white; 
+      text-decoration: none; 
+      border-radius: 50px; 
+      font-weight: 600; 
+      font-size: 1.1em;
+      min-width: 150px;
+      transition: transform 0.3s;
+    }
+    .share-btn:hover { transform: scale(1.08); }
+    .share-btn.twitter { background: #1da1f2; }
+    .share-btn.whatsapp { background: #25d366; }
+    .share-btn.facebook { background: #1877f2; }
+    .share-btn.telegram { background: #0088cc; }
+    .share-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(30px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    @media (max-width: 600px) {
+      .quiz-container { padding: 30px 20px; border-radius: 20px; }
+      h1 { font-size: 2.2em; }
+      .intro-text { font-size: 1.1em; }
+      h3 { font-size: 1.4em; }
+      label { padding: 16px; font-size: 1em; }
+      #result h2 { font-size: 2.4em; }
+      #result p { font-size: 1.2em; }
+      .share-card { padding: 25px; }
+      .share-card h3 { font-size: 2em; }
+      button, .share-btn { font-size: 1em; padding: 12px 24px; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>What Will Your 2026 Look Like?<br><small>Based on Your 2025 Energy</small></h1>
+    <p class="intro-text">Answer 8 quick questions to discover your personal 2026 vibe!</p>
+    <div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+
+    <form id="quiz-form">
+      <!-- Question 1 -->
+      <div class="question active">
+        <h3>1. How would you describe your overall mood in 2025?</h3>
+        <label><input type="radio" name="q1" value="break"> Driven and ambitious</label>
+        <label><input type="radio" name="q1" value="heal"> Emotional and reflective</label>
+        <label><input type="radio" name="q1" value="adv"> Chaotic but fun</label>
+        <label><input type="radio" name="q1" value="stab"> Steady and grounded</label>
+        <label><input type="radio" name="q1" value="trans"> Deep and changing</label>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question">
+        <h3>2. Your biggest lesson from 2025 was:</h3>
+        <label><input type="radio" name="q2" value="break"> Hard work pays off eventually</label>
+        <label><input type="radio" name="q2" value="heal"> Healing and boundaries matter most</label>
+        <label><input type="radio" name="q2" value="adv"> Embrace the unexpected</label>
+        <label><input type="radio" name="q2" value="stab"> Patience leads to real wins</label>
+        <label><input type="radio" name="q2" value="trans"> Change is inevitable and powerful</label>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question">
+        <h3>3. How did your relationships feel this year?</h3>
+        <label><input type="radio" name="q3" value="break"> Supportive and motivating</label>
+        <label><input type="radio" name="q3" value="heal"> Intense but growth-filled</label>
+        <label><input type="radio" name="q3" value="adv"> Unpredictable and exciting</label>
+        <label><input type="radio" name="q3" value="stab"> Reliable and comforting</label>
+        <label><input type="radio" name="q3" value="trans"> Evolving and transformative</label>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question">
+        <h3>4. Your approach to challenges in 2025:</h3>
+        <label><input type="radio" name="q4" value="break"> Pushed harder to conquer them</label>
+        <label><input type="radio" name="q4" value="heal"> Reflected deeply and healed</label>
+        <label><input type="radio" name="q4" value="adv"> Improvised and rolled with it</label>
+        <label><input type="radio" name="q4" value="stab"> Stayed calm and consistent</label>
+        <label><input type="radio" name="q4" value="trans"> Embraced the transformation</label>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question">
+        <h3>5. What do you want most for 2026?</h3>
+        <label><input type="radio" name="q5" value="break"> Big success and achievements</label>
+        <label><input type="radio" name="q5" value="heal"> Inner peace and rest</label>
+        <label><input type="radio" name="q5" value="adv"> Adventure and new experiences</label>
+        <label><input type="radio" name="q5" value="stab"> Balance and steady progress</label>
+        <label><input type="radio" name="q5" value="trans"> Deep personal evolution</label>
+      </div>
+
+      <!-- Question 6 -->
+      <div class="question">
+        <h3>6. Your energy heading into the new year:</h3>
+        <label><input type="radio" name="q6" value="break"> High and ambitious 🔥</label>
+        <label><input type="radio" name="q6" value="heal"> Sensitive and introspective 🌿</label>
+        <label><input type="radio" name="q6" value="adv"> Restless and ready for change ⚡</label>
+        <label><input type="radio" name="q6" value="stab"> Grounded and optimistic 🌱</label>
+        <label><input type="radio" name="q6" value="trans"> Ready for rebirth 🦋</label>
+      </div>
+
+      <!-- Question 7 -->
+      <div class="question">
+        <h3>7. Pick a 2025 vibe that resonated with you:</h3>
+        <label><input type="radio" name="q7" value="break"> Big goals and hustle</label>
+        <label><input type="radio" name="q7" value="heal"> Self-care and therapy wins</label>
+        <label><input type="radio" name="q7" value="adv"> Viral trends and spontaneity</label>
+        <label><input type="radio" name="q7" value="stab"> Building habits that last</label>
+        <label><input type="radio" name="q7" value="trans"> Letting go of the old self</label>
+      </div>
+
+      <!-- Question 8 -->
+      <div class="question">
+        <h3>8. What calls to you most right now?</h3>
+        <label><input type="radio" name="q8" value="break"> Celebration and victory</label>
+        <label><input type="radio" name="q8" value="heal"> Quiet calm and nature</label>
+        <label><input type="radio" name="q8" value="adv"> Thrills and exploration</label>
+        <label><input type="radio" name="q8" value="stab"> Harmony and growth</label>
+        <label><input type="radio" name="q8" value="trans"> Renewal and metamorphosis</label>
+      </div>
+
+      <div class="buttons">
+        <button type="button" id="next-btn">Next →</button>
+        <button type="button" id="submit-btn" style="display:none;">Reveal My 2026!</button>
+      </div>
+    </form>
+
+    <div id="result">
+      <h2 id="result-title"></h2>
+      <p id="result-desc"></p>
+      <img id="result-img" src="" alt="Your 2026 vibe">
+
+      <!-- Shareable Screenshot Card -->
+      <div class="share-card">
+        <h3 id="card-title"></h3>
+        <p id="card-desc"></p>
+        <p><small>Discover yours: <span id="card-link"></span></small></p>
+      </div>
+
+      <div class="share-buttons">
+        <a href="#" class="share-btn twitter" id="twitter-share">Share on X</a>
+        <a href="#" class="share-btn whatsapp" id="whatsapp-share">WhatsApp</a>
+        <a href="#" class="share-btn facebook" id="facebook-share">Facebook</a>
+        <a href="#" class="share-btn telegram" id="telegram-share">Telegram</a>
+        <a href="#" class="share-btn instagram" id="instagram-share">Instagram Story</a>
+        <button onclick="location.reload()">Take Quiz Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = document.querySelectorAll('.question');
+    const totalQuestions = questions.length;
+    let current = 0;
+    const scores = { break: 0, heal: 0, adv: 0, stab: 0, trans: 0 };
+
+    const results = {
+      break: {
+        title: "🚀 Year of Breakthroughs",
+        desc: "2026 is YOUR year! Massive wins, career leaps, and dreams turning into reality. Your 2025 hustle pays off in epic ways.",
+        img: "https://thumbs.dreamstime.com/b/festive-night-fireworks-text-decorative-happy-new-year-greeting-celebration-372874783.jpg"
+      },
+      heal: {
+        title: "🌿 Year of Healing & Peace",
+        desc: "After the storms of 2025, 2026 brings deep calm, emotional healing, and beautiful self-love. Serenity awaits.",
+        img: "https://img.freepik.com/premium-photo/serene-mountain-landscape-sunrise-tranquil-lake-inspiring-peace-gratitude-balance_996993-143474.jpg"
+      },
+      adv: {
+        title: "⚡ Year of Adventure & Chaos",
+        desc: "Get ready for thrills! Spontaneous trips, wild fun, and exciting twists. 2026 will be an unforgettable rollercoaster.",
+        img: "https://www.theknot.com/tk-media/images/909451d7-60e1-4765-b694-6a72cc792135"
+      },
+      stab: {
+        title: "🌱 Year of Stability & Wins",
+        desc: "Everything falls into perfect balance. Steady growth, stronger relationships, and quiet victories that last.",
+        img: "https://www.atidymind.co.uk/wp-content/uploads/2023/12/zen-garden.jpg"
+      },
+      trans: {
+        title: "🦋 Year of Transformation",
+        desc: "A complete rebirth. You'll emerge stronger, wiser, and more authentic than ever before. Magic is coming.",
+        img: "https://t3.ftcdn.net/jpg/03/51/40/20/360_F_351402022_Dx6yILBvfp8L7T2QOhsmKgYhHHR4GBuK.jpg"
+      }
+    };
+
+    function updateProgress() {
+      const percent = ((current + 1) / totalQuestions) * 100;
+      document.getElementById('progress-bar').style.width = percent + '%';
+    }
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      const checked = questions[current].querySelector('input:checked');
+      if (!checked) {
+        alert('Please select an answer!');
+        return;
+      }
+      scores[checked.value]++;
+      current++;
+      updateProgress();
+
+      if (current < totalQuestions) {
+        questions[current - 1].classList.remove('active');
+        questions[current].classList.add('active');
+      } else {
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('submit-btn').style.display = 'block';
+      }
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      let maxScore = -1;
+      let maxKey = 'break';
+      for (let key in scores) {
+        if (scores[key] > maxScore || (scores[key] === maxScore && Math.random() > 0.5)) {
+          maxScore = scores[key];
+          maxKey = key;
+        }
+      }
+
+      const res = results[maxKey];
+      document.getElementById('result-title').textContent = res.title;
+      document.getElementById('result-desc').textContent = res.desc;
+      document.getElementById('result-img').src = res.img;
+      document.getElementById('card-title').textContent = res.title;
+      document.getElementById('card-desc').textContent = res.desc;
+      document.getElementById('card-link').textContent = window.location.href;
+
+      document.getElementById('quiz-form').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+
+      // Confetti celebration!
+      confetti({
+        particleCount: 200,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+
+      const shareText = `I got "${res.title}" for 2026! 🎉 What's yours?`;
+      const url = window.location.href;
+      const fullMessage = shareText + ' ' + url;
+
+      document.getElementById('twitter-share').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(fullMessage)}`;
+      document.getElementById('whatsapp-share').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(fullMessage)}`;
+      document.getElementById('facebook-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
+      document.getElementById('telegram-share').href = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(shareText)}`;
+
+      document.getElementById('instagram-share').onclick = (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText(fullMessage).then(() => {
+          alert('Caption copied! 📋 Now screenshot the beautiful card above and post it to your Instagram Story or Feed!');
+        });
+      };
+    });
+
+    // Initial progress
+    updateProgress();
+  </script>
+</body>
+</html>
